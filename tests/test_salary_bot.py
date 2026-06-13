@@ -1,6 +1,8 @@
+import os
+import tempfile
 import unittest
 
-from salary_bot import normalize_phone, build_month_keyboard, decode_salary_message
+from salary_bot import normalize_phone, build_month_keyboard, decode_salary_message, load_environment
 
 
 class SalaryBotTests(unittest.TestCase):
@@ -18,6 +20,17 @@ class SalaryBotTests(unittest.TestCase):
         encoded = "72:101:108:108:111:108"
         decoded = decode_salary_message(encoded, 0)
         self.assertEqual(decoded, "Hello")
+
+    def test_load_environment_reads_from_project_directory(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            env_path = os.path.join(temp_dir, ".env")
+            with open(env_path, "w", encoding="utf-8") as handle:
+                handle.write("TG_BOT_TOKEN=test-token\n")
+
+            os.environ.pop("TG_BOT_TOKEN", None)
+            load_environment(base_dir=temp_dir)
+            self.assertEqual(os.environ.get("TG_BOT_TOKEN"), "test-token")
+            os.environ.pop("TG_BOT_TOKEN", None)
 
 
 if __name__ == "__main__":

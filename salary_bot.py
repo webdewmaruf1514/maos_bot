@@ -7,12 +7,18 @@ from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
 
+
+def load_environment(base_dir: Optional[str] = None) -> None:
+    if base_dir is None:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+    load_dotenv(os.path.join(base_dir, ".env"), override=False)
+
 try:
     import mysql.connector as mysql_connector
 except ImportError:  # pragma: no cover - handled at runtime
     mysql_connector = None
 
-load_dotenv()
+load_environment()
 
 TOKEN = os.getenv("TG_BOT_TOKEN", "")
 API_URL = f"https://api.telegram.org/bot{TOKEN}"
