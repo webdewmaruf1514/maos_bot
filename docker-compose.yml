@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  bot:
+    build: .
+    container_name: bnpz-bot
+    ports:
+      - "8080:8000"
+    environment:
+      TG_BOT_TOKEN: ${TG_BOT_TOKEN:-680953533:AAEsBBp5Z1vIaoXmRxZIpuX5iUwn9O3dPGQ}
+      DB_HOST: ${DB_HOST:-db}
+      DB_USER: ${DB_USER:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-2208Mysql!@#Bnpz}
+      DB_NAME: ${DB_NAME:-maosh}
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: bnpz-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-2208Mysql!@#Bnpz}
+      MYSQL_DATABASE: ${DB_NAME:-maosh}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
