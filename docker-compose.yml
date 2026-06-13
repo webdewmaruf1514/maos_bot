@@ -4,7 +4,7 @@ services:
     build: .
     container_name: bnpz-bot
     ports:
-      - "8080:8000"
+      - "8081:8080"
     environment:
       TG_BOT_TOKEN: ${TG_BOT_TOKEN:-680953533:AAEsBBp5Z1vIaoXmRxZIpuX5iUwn9O3dPGQ}
       DB_HOST: ${DB_HOST:-db}
