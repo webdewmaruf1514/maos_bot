@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   bot:
     build: .
@@ -7,8 +8,8 @@ services:
       - "8081:8000"
     environment:
       TG_BOT_TOKEN: ${TG_BOT_TOKEN}
-      DB_HOST: ${DB_HOST:-db}
-      DB_USER: ${DB_USER:-root}
+      DB_HOST: db
+      DB_USER: root
       DB_PASSWORD: ${DB_PASSWORD:-2208Mysql!@#Bnpz}
       DB_NAME: ${DB_NAME:-maosh}
     depends_on:
@@ -25,17 +26,17 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
-    phpmyadmin:
-      image: phpmyadmin/phpmyadmin
-      container_name: phpmyadmin
-      restart: always
-      ports:
-        - "8082:80"
-      environment:
-        PMA_HOST: db
-        PMA_PORT: 3306
-      depends_on:
-        - db
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: bnpz-pma
+    restart: always
+    ports:
+      - "8082:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    depends_on:
+      - db
 
 volumes:
   mysql_data:
